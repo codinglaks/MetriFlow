@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <!-- Security policy: only files from this site can load; no inline scripts or styles; no network requests -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter | MetriFlow</title>
+    <meta name="description" content="Convert length, weight, volume, temperature, speed, pressure, energy, data and more. Over 400 units, including kg to litres by density. Runs on your device.">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="icon" type="image/svg+xml" href="../media/logo/logo.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../media/logo/favicon-32.png">
+    <link rel="apple-touch-icon" href="../media/logo/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/themes_style.css">
+    <link rel="stylesheet" href="../css/converter_style.css">
+
+    <script src="../js/security.js"></script>
+    <!-- No "defer": applies the saved theme before the page shows -->
+    <script src="../js/themes_function.js"></script>
+    <script src="../js/calculator_engine.js" defer></script>
+    <script src="../js/converter_data.js" defer></script>
+    <script src="../js/converter_engine.js" defer></script>
+    <script src="../js/converter_function.js" defer></script>
+</head>
+<body>
+
+    <!-- Local icon sprite -->
+    <svg class="sprite-hidden" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+            <linearGradient id="mf-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" class="mf-stop-a"/>
+                <stop offset="1" class="mf-stop-b"/>
+            </linearGradient>
+        </defs>
+        <symbol id="mf-logo" viewBox="0 0 64 64">
+            <rect width="64" height="64" rx="17" fill="url(#mf-grad)"/>
+            <rect x="13" y="9" width="38" height="10" rx="3.5" fill="#fff" opacity=".95"/>
+            <g stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <path d="M21 25v8M17 29h8"/>
+                <path d="M39 29h8"/>
+                <path d="M16 41h32M44 37.5L48 41l-4 3.5"/>
+                <path d="M48 51H16M20 47.5L16 51l4 3.5"/>
+            </g>
+            <circle cx="43" cy="25.5" r="1.8" fill="#fff"/>
+            <circle cx="43" cy="32.5" r="1.8" fill="#fff"/>
+        </symbol>
+        <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></symbol>
+        <symbol id="i-calculator" viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8h.01"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></symbol>
+        <symbol id="i-swap" viewBox="0 0 24 24"><path d="M8 20V6M4 10l4-4 4 4M16 4v14M12 14l4 4 4-4"/></symbol>
+        <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h11v11H9zM5 15H4V4h11v1"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+        <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+        <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M13 4v4M9 10v4M17 16v4"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6zM9 12l2 2 4-4"/></symbol>
+    </svg>
+
+    <a class="skip-link" href="#main">Skip to the converter</a>
+
+    <!-- ============ HEADER ============ -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="../../index.html" aria-label="MetriFlow home">
+                <svg class="brand-logo" viewBox="0 0 64 64" aria-hidden="true"><use href="#mf-logo"/></svg>
+                <span class="brand-name">MetriFlow</span>
+            </a>
+            <div class="header-actions">
+                <a class="nav-link" href="calculator.html">
+                    <svg class="icon" aria-hidden="true"><use href="#i-calculator"/></svg><span>Calculator</span>
+                </a>
+                <!-- The theme button is built here by assets/js/themes_function.js -->
+                <div data-theme-switcher></div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="wrap page">
+
+        <div class="page-head">
+            <h1>Unit converter</h1>
+            <p id="page-sub">Convert between units of length, weight, volume, temperature, speed, data and much more.</p>
+        </div>
+
+        <noscript><p class="notice">This converter needs JavaScript. Please turn it on in your browser.</p></noscript>
+
+        <!-- ============ SEARCH ============ -->
+        <section class="finder" aria-label="Find a unit">
+            <label class="finder-label" for="search">Search any unit, or type a conversion such as <q>5 km to miles</q> or <q>kg to litre</q></label>
+            <div class="search-box">
+                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+                <input id="search" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                       maxlength="60" placeholder="Search units, e.g. gallon, psi, 5 km to miles"
+                       aria-controls="search-results" aria-expanded="false">
+                <button id="search-clear" class="icon-btn small" type="button" aria-label="Clear search" hidden>
+                    <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+            </div>
+            <ul id="search-results" class="search-results" hidden></ul>
+            <p id="search-status" class="sr-only" role="status"></p>
+        </section>
+
+        <!-- ============ CATEGORIES ============ -->
+        <section class="block" aria-labelledby="cats-title">
+            <h2 id="cats-title" class="block-title">Categories</h2>
+            <div id="cats" class="cats"></div>
+        </section>
+
+        <section class="block presets" aria-labelledby="presets-title">
+            <h2 id="presets-title" class="block-title">Popular conversions</h2>
+            <div id="presets" class="chip-row"></div>
+        </section>
+
+        <!-- ============ CONVERTER ============ -->
+        <section class="converter" id="converter-card" aria-labelledby="cat-name">
+            <div class="conv-head">
+                <div>
+                    <h2 id="cat-name">Length / Distance</h2>
+                    <p id="cat-desc" class="cat-desc"></p>
+                </div>
+                <span id="cat-count" class="count-badge"></span>
+            </div>
+
+            <!-- Shown only for "SI base units" -->
+            <div id="si-ref" class="si-ref" hidden>
+                <div class="table-scroll">
+                    <table class="table">
+                        <thead><tr><th scope="col">Physical quantity</th><th scope="col">SI unit</th><th scope="col">Symbol</th><th scope="col"><span class="sr-only">Open</span></th></tr></thead>
+                        <tbody id="si-ref-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tool">
+                <div class="pair">
+                    <div class="side">
+                        <label class="side-label" for="value">From</label>
+                        <div class="value-row">
+                            <input id="value" class="value-input" type="text" inputmode="decimal" maxlength="60" value="1"
+                                   autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="msg">
+                            <button id="btn-sign" class="icon-btn" type="button" aria-label="Change sign (plus or minus)" title="Change sign">±</button>
+                        </div>
+                        <label class="sr-only" for="from">From unit</label>
+                        <select id="from" class="unit-select"></select>
+                    </div>
+
+                    <button id="btn-swap" class="swap" type="button" aria-label="Swap the two units" title="Swap units">
+                        <svg class="icon" aria-hidden="true"><use href="#i-swap"/></svg>
+                    </button>
+
+                    <div class="side">
+                        <span class="side-label" id="to-label">To</span>
+                        <div class="value-row">
+                            <output id="result" class="result" aria-labelledby="to-label" for="value from to">1</output>
+                            <button id="btn-copy" class="icon-btn" type="button" aria-label="Copy result" title="Copy result">
+                                <svg class="icon" aria-hidden="true"><use id="copy-use" href="#i-copy"/></svg>
+                            </button>
+                        </div>
+                        <label class="sr-only" for="to">To unit</label>
+                        <select id="to" class="unit-select"></select>
+                    </div>
+                </div>
+
+                <!-- Mass and volume (and viscosity) need a density -->
+                <div id="density-panel" class="density" hidden>
+                    <h3>Density needed</h3>
+                    <p>Weight and volume are different things, so this conversion depends on the substance.</p>
+                    <div class="density-grid">
+                        <div>
+                            <label for="substance">Substance</label>
+                            <select id="substance" class="unit-select"></select>
+                        </div>
+                        <div>
+                            <label for="density">Density (kg/m³)</label>
+                            <input id="density" class="density-input" type="text" inputmode="decimal" maxlength="20" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                    <p id="density-note" class="density-note"></p>
+                </div>
+
+                <p id="msg" class="msg" role="alert"></p>
+                <p id="formula" class="formula"></p>
+                <p id="unit-note" class="unit-note"></p>
+                <p id="status" class="status" role="status"></p>
+
+                <details class="settings">
+                    <summary><svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg> Display settings</summary>
+                    <div class="settings-grid">
+                        <div>
+                            <label for="opt-sig">Precision</label>
+                            <select id="opt-sig" class="unit-select">
+                                <option value="4">4 significant digits</option>
+                                <option value="6">6 significant digits</option>
+                                <option value="8">8 significant digits</option>
+                                <option value="10">10 significant digits</option>
+                                <option value="12">12 significant digits</option>
+                                <option value="15">15 significant digits</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="opt-notation">Notation</label>
+                            <select id="opt-notation" class="unit-select">
+                                <option value="auto">Automatic</option>
+                                <option value="scientific">Scientific (× 10ⁿ)</option>
+                                <option value="plain">Plain (all digits)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="opt-group">Digit grouping</label>
+                            <select id="opt-group" class="unit-select">
+                                <option value="none">None (1234567)</option>
+                                <option value="intl">International (1,234,567)</option>
+                                <option value="indian">Indian (12,34,567)</option>
+                            </select>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <!-- ============ ALL CONVERSIONS ============ -->
+        <section id="all" class="block all" aria-labelledby="all-title">
+            <div class="all-head">
+                <h2 id="all-title" class="block-title">All conversions</h2>
+                <div class="filter-box">
+                    <label class="sr-only" for="filter">Filter the list</label>
+                    <input id="filter" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Filter units">
+                </div>
+            </div>
+            <p id="all-sub" class="all-sub"></p>
+            <div class="table-scroll">
+                <table class="table" id="all-table">
+                    <thead><tr><th scope="col">Unit</th><th scope="col" class="num">Value</th><th scope="col"><span class="sr-only">Copy</span></th></tr></thead>
+                    <tbody id="all-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============ RECENT ============ -->
+        <section id="recents" class="block" aria-labelledby="recent-title" hidden>
+            <div class="all-head">
+                <h2 id="recent-title" class="block-title"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Recent conversions</h2>
+                <button id="recent-clear" class="chip" type="button">Clear</button>
+            </div>
+            <div id="recent-list" class="chip-row"></div>
+        </section>
+
+        <p class="privacy">
+            <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+            <span>Private by design: conversions are worked out on your device. Values are rounded for display, and some units (such as month, year or the barrel) have notes, so check them before relying on a result for anything critical.</span>
+        </p>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap footer-inner">
+            <p>&copy; <span id="year">2026</span> MetriFlow. Created by Lakshya Singh.</p>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="../../index.html"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+                <a href="calculator.html"><svg class="icon" aria-hidden="true"><use href="#i-calculator"/></svg><span>Calculator</span></a>
+                <a href="about.html"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span>About</span></a>
+            </nav>
+        </div>
+    </footer>
+
+</body>
+</html>

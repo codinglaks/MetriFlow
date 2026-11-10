@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <!-- Security policy: only files from this site can load; no inline scripts or styles; no network requests -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator | MetriFlow</title>
+    <meta name="description" content="A scientific calculator with trigonometry, logarithms, roots, powers, factorials and more. Runs entirely on your device.">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="icon" type="image/svg+xml" href="../media/logo/logo.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../media/logo/favicon-32.png">
+    <link rel="apple-touch-icon" href="../media/logo/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/themes_style.css">
+    <link rel="stylesheet" href="../css/calculator_style.css">
+
+    <script src="../js/security.js"></script>
+    <!-- No "defer": applies the saved theme before the page shows -->
+    <script src="../js/themes_function.js"></script>
+    <script src="../js/calculator_engine.js" defer></script>
+    <script src="../js/calculator_function.js" defer></script>
+</head>
+<body>
+
+    <!-- Local icon sprite (no icon files to download, no external requests) -->
+    <svg class="sprite-hidden" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+            <linearGradient id="mf-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" class="mf-stop-a"/>
+                <stop offset="1" class="mf-stop-b"/>
+            </linearGradient>
+        </defs>
+        <symbol id="mf-logo" viewBox="0 0 64 64">
+            <rect width="64" height="64" rx="17" fill="url(#mf-grad)"/>
+            <rect x="13" y="9" width="38" height="10" rx="3.5" fill="#fff" opacity=".95"/>
+            <g stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <path d="M21 25v8M17 29h8"/>
+                <path d="M39 29h8"/>
+                <path d="M16 41h32M44 37.5L48 41l-4 3.5"/>
+                <path d="M48 51H16M20 47.5L16 51l4 3.5"/>
+            </g>
+            <circle cx="43" cy="25.5" r="1.8" fill="#fff"/>
+            <circle cx="43" cy="32.5" r="1.8" fill="#fff"/>
+        </symbol>
+        <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></symbol>
+        <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 7v5l3 2"/></symbol>
+        <symbol id="i-backspace" viewBox="0 0 24 24"><path d="M21 5H9l-7 7 7 7h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1zM17 9l-6 6M11 9l6 6"/></symbol>
+        <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h11v11H9zM5 15H4V4h11v1"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+        <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+        <symbol id="i-converter" viewBox="0 0 24 24"><path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></symbol>
+        <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8h.01"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6zM9 12l2 2 4-4"/></symbol>
+    </svg>
+
+    <a class="skip-link" href="#main">Skip to the calculator</a>
+
+    <!-- ============ HEADER ============ -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <a class="brand" href="../../index.html" aria-label="MetriFlow home">
+                <svg class="brand-logo" viewBox="0 0 64 64" aria-hidden="true"><use href="#mf-logo"/></svg>
+                <span class="brand-name">MetriFlow</span>
+            </a>
+
+            <div class="header-actions">
+                <a class="nav-link" href="converter.html">
+                    <svg class="icon" aria-hidden="true"><use href="#i-converter"/></svg>
+                    <span>Unit Converter</span>
+                </a>
+                <!-- The theme button is built here by assets/js/themes_function.js -->
+                <div data-theme-switcher></div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="wrap page">
+
+        <div class="page-head">
+            <h1>Scientific calculator</h1>
+            <p>Type an expression or use the keys. Open brackets close automatically, and everything is worked out on your device.</p>
+        </div>
+
+        <noscript><p class="notice">This calculator needs JavaScript. Please turn it on in your browser.</p></noscript>
+
+        <div class="calc-layout">
+
+            <!-- ============ CALCULATOR ============ -->
+            <section class="calc" aria-label="Scientific calculator">
+
+                <div class="display">
+                    <div class="indicators" aria-hidden="true">
+                        <span id="ind-angle">DEG</span>
+                        <span id="ind-2nd" hidden>2nd</span>
+                        <span id="ind-hyp" hidden>HYP</span>
+                        <span id="ind-mem" hidden>M</span>
+                    </div>
+
+                    <label class="sr-only" for="expr">Expression</label>
+                    <input id="expr" class="expr" type="text" inputmode="none" maxlength="200"
+                           autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                           enterkeyhint="done" placeholder="0" aria-describedby="result">
+
+                    <div class="result-row">
+                        <output id="result" class="result" for="expr">0</output>
+                        <button id="btn-copy" class="icon-btn" type="button" aria-label="Copy result" title="Copy result">
+                            <svg class="icon" aria-hidden="true"><use id="copy-use" href="#i-copy"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <button id="btn-angle" class="chip" type="button" title="Angle unit: press to change">DEG</button>
+                    <button id="btn-2nd" class="chip" type="button" aria-pressed="false" title="Second functions">2nd</button>
+                    <button id="btn-hyp" class="chip" type="button" aria-pressed="false" title="Hyperbolic functions">Hyp</button>
+
+                    <span class="toolbar-gap" aria-hidden="true"></span>
+
+                    <button class="chip" type="button" data-mem="clear"    title="Memory clear" aria-label="Memory clear">MC</button>
+                    <button class="chip" type="button" data-mem="recall"   title="Memory recall" aria-label="Memory recall">MR</button>
+                    <button class="chip" type="button" data-mem="add"      title="Add to memory" aria-label="Add to memory">M+</button>
+                    <button class="chip" type="button" data-mem="subtract" title="Subtract from memory" aria-label="Subtract from memory">M−</button>
+
+                    <button id="btn-history" class="chip chip-history" type="button" aria-expanded="false" aria-controls="history-panel">
+                        <svg class="icon" aria-hidden="true"><use href="#i-history"/></svg>
+                        <span>History</span>
+                    </button>
+                </div>
+
+                <p id="status" class="status" role="status"></p>
+                <p id="announce" class="sr-only" role="status" aria-live="polite"></p>
+
+                <div class="keys">
+                    <div id="keys-sci" class="grid sci" role="group" aria-label="Scientific functions"></div>
+                    <div id="keys-main" class="grid main" role="group" aria-label="Number pad"></div>
+                </div>
+            </section>
+
+            <!-- ============ HISTORY ============ -->
+            <aside id="history-panel" class="history" aria-label="Calculation history" hidden>
+                <div class="history-head">
+                    <h2>History</h2>
+                    <button id="btn-clear-history" class="chip" type="button">
+                        <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>
+                        <span>Clear</span>
+                    </button>
+                </div>
+                <p id="history-empty" class="history-empty">No calculations yet. Your results will appear here.</p>
+                <ol id="history-list" class="history-list"></ol>
+            </aside>
+
+        </div>
+
+        <p class="privacy">
+            <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+            <span>Private by design: calculations never leave your device. Results show 12 significant digits.</span>
+        </p>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap footer-inner">
+            <p>&copy; <span id="year">2026</span> MetriFlow. Created by Lakshya Singh.</p>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="../../index.html"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+                <a href="about.html"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span>About</span></a>
+            </nav>
+        </div>
+    </footer>
+
+</body>
+</html>
