@@ -1,10 +1,6 @@
-/* =========================================================
-   MetriFlow | home page styles
-   Theme colours (--bg, --text, --accent ...) and the theme button
-   come from assets/js/themes_function.js
-   ========================================================= */
+/* Homepage styles */
 
-/* ---------- Base ---------- */
+/* Base */
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -19,7 +15,7 @@ html {
 body {
     margin: 0;
     min-width: 0;
-    overflow-x: clip;               /* never allow sideways scrolling */
+    overflow-x: clip;
     background-color: var(--bg);
     background-image: var(--bg-grad);
     background-repeat: no-repeat;
@@ -54,7 +50,7 @@ img { max-width: 100%; display: block; }
 }
 .skip-link:focus { top: 1rem; }
 
-/* ---------- Buttons ---------- */
+/* Buttons */
 .btn {
     display: inline-flex; align-items: center; justify-content: center;
     padding: .85rem 1.8rem;
@@ -68,13 +64,13 @@ img { max-width: 100%; display: block; }
 .btn:active { transform: scale(.97); }
 .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-strong); }
 
-/* Hover effects only on devices that really hover (no sticky hover on phones) */
+/* Hover-capable devices */
 @media (hover: hover) {
     .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -14px var(--accent); }
     .btn-ghost:hover { box-shadow: none; border-color: var(--accent); }
 }
 
-/* ---------- Header ---------- */
+/* Header */
 .site-header {
     position: sticky; top: 0; z-index: 50;
     background: color-mix(in srgb, var(--bg) 82%, transparent);
@@ -102,7 +98,7 @@ img { max-width: 100%; display: block; }
 .icon { width: 1.15em; height: 1.15em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 @media (hover: hover) { .nav-link:hover { border-color: var(--accent); } }
 
-/* ---------- Hero ---------- */
+/* Hero */
 .hero { padding-block: clamp(2rem, 6vw, 5rem) clamp(2.5rem, 7vw, 6rem); }
 
 .hero-grid {
@@ -135,7 +131,7 @@ img { max-width: 100%; display: block; }
     border: 6px solid var(--bg);
     background: var(--surface-2);
 }
-.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; font-size: 0; color: transparent; }  /* font-size 0 hides broken-image alt text */
+.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; font-size: 0; color: transparent; }
 .initials {
     position: absolute; inset: 0; display: grid; place-items: center;
     font-family: var(--font-display, "Bricolage Grotesque", sans-serif); font-weight: 800; font-size: clamp(2.6rem, 14vw, 4.5rem);
@@ -149,7 +145,7 @@ img { max-width: 100%; display: block; }
 .hero-copy p { max-width: 54ch; color: var(--muted); font-size: 1.06em; }
 .hero-copy .btn { margin-top: .8rem; }
 
-/* ---------- Tools ---------- */
+/* Tools */
 .tools { background: var(--soft-grad, var(--bg-soft)); padding-block: clamp(3rem, 8vw, 6rem); transition: background-color .3s ease; }
 
 .tool { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.75rem, 6vw, 5rem); align-items: center; }
@@ -233,14 +229,14 @@ img { max-width: 100%; display: block; }
 }
 .conv-note { margin: .2rem 0 0; text-align: center; font-size: .85rem; color: var(--muted); }
 
-/* ---------- About teaser ---------- */
+/* About section */
 .about-teaser { padding-block: clamp(2.5rem, 6vw, 4rem); background: transparent; border-top: 1px solid var(--line); }
 .teaser-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 2.5rem; align-items: center; }
 .teaser-copy h2 { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.2rem); font-weight: 700; margin-bottom: .6rem; }
 .teaser-copy p { margin: 0; max-width: 56ch; color: var(--muted); }
 .teaser-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
 
-/* ---------- Footer ---------- */
+/* Footer */
 .site-footer { background: var(--soft-grad, var(--bg)); border-top: 1px solid var(--line); padding-top: clamp(2.5rem, 6vw, 4rem); }
 
 .footer-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); gap: 2.5rem; padding-bottom: 2.5rem; }
@@ -255,17 +251,17 @@ img { max-width: 100%; display: block; }
 .footer-bottom { border-top: 1px solid var(--line); padding-block: 1.3rem; }
 .footer-bottom p { margin: 0; font-size: .92rem; color: var(--muted); }
 
-/* ---------- Soft motion (transform and opacity only: no layout cost) ---------- */
+/* Animations */
 @keyframes softIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes softZoom { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
 
-/* One calm entrance when the page opens: header, then hero text, then the portrait */
+
 .site-header { animation: softIn .5s ease backwards; }
 .hero-copy h1 { animation: softIn .65s cubic-bezier(.2, .7, .2, 1) .08s backwards; }
 .hero-copy p, .hero-copy .btn { animation: softIn .65s cubic-bezier(.2, .7, .2, 1) .18s backwards; }
 .portrait { animation: softZoom .7s cubic-bezier(.2, .7, .2, 1) .12s backwards; }
 
-/* ---------- Tablets and phones ---------- */
+/* Tablet layout */
 @media (max-width: 860px) {
     .hero-grid { grid-template-columns: minmax(0, 1fr); }
     .portrait { justify-self: center; width: min(320px, 100%); }
@@ -279,46 +275,81 @@ img { max-width: 100%; display: block; }
     .teaser-inner { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Phones: everything about 8% smaller (sizes are in rem, so scaling the root shrinks the page evenly) */
+/* Phone layout */
 @media (max-width: 520px) {
-    html { font-size: 92%; }
+    html { font-size: 100%; }
     body { font-size: 1rem; }
-    .wrap { width: min(1120px, 100% - 1.75rem); }
+    .wrap { width: min(1120px, 100% - 1.5rem); }
 
-    .header-inner { min-height: 3.75rem; }
-    .brand { gap: .5rem; }
-    .brand-logo { width: 2.1rem; height: 2.1rem; }
-    .brand-name { font-size: 1.2rem; }
+    .header-inner { min-height: 3.75rem; gap: .5rem; }
+    .brand { gap: .45rem; }
+    .brand-logo { width: 2rem; height: 2rem; }
+    .brand-name { font-size: 1.15rem; }
+    .header-actions { gap: .4rem; }
+    .nav-link {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0;
+        justify-content: center;
+    }
+    .nav-link span { display: none; }
+
+    .hero { padding-block: 1.5rem 2.25rem; }
+    .hero-grid { gap: 1.25rem; }
+    .portrait {
+        width: 100%;
+        padding: .25rem;
+        gap: .85rem;
+    }
+    .ring { width: clamp(170px, 58vw, 220px); }
+    .ring::after { inset: -8px; }
+    .portrait figcaption { font-size: .85rem; }
+    .hero-copy h1 {
+        max-width: 18ch;
+        font-size: clamp(1.85rem, 7.5vw, 2.5rem);
+        line-height: 1.08;
+    }
+    .hero-copy p { font-size: 1rem; }
 
     .hero-copy .btn,
     .tool-copy .btn,
     .teaser-actions .btn { width: 100%; }
 
-    .nav-link { width: 2.5rem; height: 2.5rem; padding: 0; justify-content: center; }
-    .nav-link span { display: none; }
-
-    .footer-grid { grid-template-columns: minmax(0, 1fr); }
-
-    .stage { border-radius: 22px; }
-    .device { border-radius: 20px; }
+    .tools { padding-block: 2.5rem; }
+    .tool { gap: 1.5rem; }
+    .tool + .tool { margin-top: 2.75rem; }
+    .stage { padding: 1rem; border-radius: 20px; }
+    .device { border-radius: 18px; }
     .calc-keys { gap: .4rem; }
     .calc-keys span { height: 2.5rem; }
+    .conv-field { gap: .35rem .6rem; }
+
+    .teaser-inner { gap: 1.25rem; }
+    .teaser-actions { display: grid; grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .footer-brand { grid-column: auto; }
 }
 
-/* Very small screens (around 250 to 360 px) */
+/* Compact phones */
 @media (max-width: 360px) {
-    html { font-size: 86%; }
-    .wrap { width: min(1120px, 100% - 1.25rem); }
-    .nav-link { display: none; }                  /* About stays reachable from the footer and the teaser section */
-    .brand-name { font-size: 1.1rem; }
-    .brand-logo { width: 2rem; height: 2rem; }
-    .portrait { padding: .75rem; }
+    .wrap { width: calc(100% - 1.25rem); }
+    .header-inner { min-height: 3.5rem; }
+    .brand-name { font-size: 1.05rem; }
+    .brand-logo { width: 1.85rem; height: 1.85rem; }
+    .nav-link { width: 2.25rem; height: 2.25rem; }
+    .portrait { gap: .7rem; }
+    .ring { width: clamp(160px, 55vw, 195px); }
+    .hero-copy h1 { font-size: clamp(1.75rem, 8vw, 2.1rem); }
+    .stage { padding: .75rem; }
     .calc-keys { gap: .3rem; }
-    .calc-keys span { height: 2.2rem; font-size: .85rem; border-radius: 10px; }
-    .conv-tabs span { font-size: .8rem; padding: .2rem .6rem; }
-    .chips li { font-size: .85rem; }
+    .calc-keys span { height: 2.25rem; font-size: .9rem; border-radius: 9px; }
+    .conv-tabs { gap: .3rem; }
+    .conv-tabs span { font-size: .78rem; padding: .2rem .55rem; }
+    .chips { gap: .4rem; }
+    .chips li { font-size: .82rem; }
 }
 
+/* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .ring::before { animation: none; }

@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <!-- Security policy: only files from this site can load; no inline scripts or styles; no network requests -->
+    <!-- Local-only content policy; inline code and external requests are blocked. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,14 +19,14 @@
     <link rel="stylesheet" href="../css/calculator_style.css">
 
     <script src="../js/security.js"></script>
-    <!-- No "defer": applies the saved theme before the page shows -->
+    <!-- Load before page render to apply the saved theme. -->
     <script src="../js/themes_function.js"></script>
     <script src="../js/calculator_engine.js" defer></script>
     <script src="../js/calculator_function.js" defer></script>
 </head>
 <body>
 
-    <!-- Local icon sprite (no icon files to download, no external requests) -->
+    
     <svg class="sprite-hidden" width="0" height="0" aria-hidden="true" focusable="false">
         <defs>
             <linearGradient id="mf-grad" x1="0" y1="0" x2="1" y2="1">
@@ -60,7 +60,7 @@
 
     <a class="skip-link" href="#main">Skip to the calculator</a>
 
-    <!-- ============ HEADER ============ -->
+    
     <header class="site-header">
         <div class="wrap header-inner">
             <a class="brand" href="../../index.html" aria-label="MetriFlow home">
@@ -73,7 +73,7 @@
                     <svg class="icon" aria-hidden="true"><use href="#i-converter"/></svg>
                     <span>Unit Converter</span>
                 </a>
-                <!-- The theme button is built here by assets/js/themes_function.js -->
+                <!-- Theme switcher is inserted by themes_function.js. -->
                 <div data-theme-switcher></div>
             </div>
         </div>
@@ -90,7 +90,7 @@
 
         <div class="calc-layout">
 
-            <!-- ============ CALCULATOR ============ -->
+            
             <section class="calc" aria-label="Scientific calculator">
 
                 <div class="display">
@@ -141,7 +141,7 @@
                 </div>
             </section>
 
-            <!-- ============ HISTORY ============ -->
+            
             <aside id="history-panel" class="history" aria-label="Calculation history" hidden>
                 <div class="history-head">
                     <h2>History</h2>
