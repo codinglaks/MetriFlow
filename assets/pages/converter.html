@@ -56,8 +56,9 @@
         <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h11v11H9zM5 15H4V4h11v1"/></symbol>
         <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
         <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+        <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+        <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
         <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M13 4v4M9 10v4M17 16v4"/></symbol>
-        <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2"/></symbol>
         <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6zM9 12l2 2 4-4"/></symbol>
     </svg>
 
@@ -84,135 +85,105 @@
 
         <div class="page-head">
             <h1>Unit converter</h1>
-            <p id="page-sub">Convert between units of length, weight, volume, temperature, speed, data and much more.</p>
+            <p>Pick a category, choose your two units, type a number. The answer appears instantly.</p>
         </div>
 
         <noscript><p class="notice">This converter needs JavaScript. Please turn it on in your browser.</p></noscript>
+        <p id="load-error" class="notice" role="alert" hidden>The converter could not load. Please refresh the page.</p>
 
-        <!-- ============ SEARCH ============ -->
-        <section class="finder" aria-label="Find a unit">
-            <label class="finder-label" for="search">Search any unit, or type a conversion such as <q>5 km to miles</q> or <q>kg to litre</q></label>
-            <div class="search-box">
-                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
-                <input id="search" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
-                       maxlength="60" placeholder="Search units, e.g. gallon, psi, 5 km to miles"
-                       aria-controls="search-results" aria-expanded="false">
-                <button id="search-clear" class="icon-btn small" type="button" aria-label="Clear search" hidden>
-                    <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-                </button>
-            </div>
-            <ul id="search-results" class="search-results" hidden></ul>
-            <p id="search-status" class="sr-only" role="status"></p>
-        </section>
-
-        <!-- ============ CATEGORIES ============ -->
-        <section class="block" aria-labelledby="cats-title">
-            <h2 id="cats-title" class="block-title">Categories</h2>
+        <!-- ============ STEP 1: CATEGORY ============ -->
+        <nav class="cats-wrap" aria-label="Choose a category">
             <div id="cats" class="cats"></div>
-        </section>
+        </nav>
 
-        <section class="block presets" aria-labelledby="presets-title">
-            <h2 id="presets-title" class="block-title">Popular conversions</h2>
-            <div id="presets" class="chip-row"></div>
-        </section>
-
-        <!-- ============ CONVERTER ============ -->
         <section class="converter" id="converter-card" aria-labelledby="cat-name">
             <div class="conv-head">
-                <div>
-                    <h2 id="cat-name">Length / Distance</h2>
-                    <p id="cat-desc" class="cat-desc"></p>
-                </div>
-                <span id="cat-count" class="count-badge"></span>
+                <h2 id="cat-name">Length / Distance</h2>
+                <p id="cat-desc" class="cat-desc"></p>
             </div>
 
-            <!-- Shown only for "SI base units" -->
-            <div id="si-ref" class="si-ref" hidden>
-                <div class="table-scroll">
-                    <table class="table">
-                        <thead><tr><th scope="col">Physical quantity</th><th scope="col">SI unit</th><th scope="col">Symbol</th><th scope="col"><span class="sr-only">Open</span></th></tr></thead>
-                        <tbody id="si-ref-body"></tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- Shown only for "SI base units": a list of buttons that open the right converter -->
+            <div id="si-ref" class="si-grid" hidden></div>
 
             <div id="tool">
+                <!-- ============ STEP 2 and 3: UNITS AND VALUE ============ -->
                 <div class="pair">
                     <div class="side">
-                        <label class="side-label" for="value">From</label>
-                        <div class="value-row">
-                            <input id="value" class="value-input" type="text" inputmode="decimal" maxlength="60" value="1"
-                                   autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="msg">
-                            <button id="btn-sign" class="icon-btn" type="button" aria-label="Change sign (plus or minus)" title="Change sign">±</button>
+                        <div class="side-top">
+                            <label class="side-label" for="value">From</label>
+                            <button id="btn-sign" class="mini-btn" type="button" aria-label="Change sign (plus or minus)" title="Change sign">+/−</button>
                         </div>
-                        <label class="sr-only" for="from">From unit</label>
-                        <select id="from" class="unit-select"></select>
+                        <input id="value" class="value-input" type="text" inputmode="decimal" maxlength="60" value="1"
+                               autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="msg">
+                        <button id="btn-from" class="unit-btn" type="button" aria-haspopup="dialog" aria-label="Choose the unit to convert from">
+                            <span class="unit-sym" id="from-sym"></span>
+                            <span class="unit-name" id="from-name"></span>
+                            <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
+                        </button>
                     </div>
 
                     <button id="btn-swap" class="swap" type="button" aria-label="Swap the two units" title="Swap units">
                         <svg class="icon" aria-hidden="true"><use href="#i-swap"/></svg>
                     </button>
 
-                    <div class="side">
-                        <span class="side-label" id="to-label">To</span>
-                        <div class="value-row">
-                            <output id="result" class="result" aria-labelledby="to-label" for="value from to">1</output>
-                            <button id="btn-copy" class="icon-btn" type="button" aria-label="Copy result" title="Copy result">
-                                <svg class="icon" aria-hidden="true"><use id="copy-use" href="#i-copy"/></svg>
+                    <div class="side side-to">
+                        <div class="side-top">
+                            <span class="side-label" id="to-label">To</span>
+                            <button id="btn-copy" class="mini-btn" type="button" aria-label="Copy result" title="Copy result">
+                                <svg class="icon" aria-hidden="true"><use id="copy-use" href="#i-copy"/></svg><span id="copy-text">Copy</span>
                             </button>
                         </div>
-                        <label class="sr-only" for="to">To unit</label>
-                        <select id="to" class="unit-select"></select>
+                        <output id="result" class="result" aria-labelledby="to-label">1</output>
+                        <button id="btn-to" class="unit-btn" type="button" aria-haspopup="dialog" aria-label="Choose the unit to convert to">
+                            <span class="unit-sym" id="to-sym"></span>
+                            <span class="unit-name" id="to-name"></span>
+                            <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Mass and volume (and viscosity) need a density -->
+                <!-- Only for conversions that depend on a substance (kg to litre, viscosity) -->
                 <div id="density-panel" class="density" hidden>
-                    <h3>Density needed</h3>
-                    <p>Weight and volume are different things, so this conversion depends on the substance.</p>
+                    <p class="density-title">This conversion depends on the substance</p>
                     <div class="density-grid">
-                        <div>
+                        <div class="field">
                             <label for="substance">Substance</label>
-                            <select id="substance" class="unit-select"></select>
+                            <select id="substance"></select>
                         </div>
-                        <div>
+                        <div class="field">
                             <label for="density">Density (kg/m³)</label>
                             <input id="density" class="density-input" type="text" inputmode="decimal" maxlength="20" autocomplete="off" spellcheck="false">
                         </div>
                     </div>
-                    <p id="density-note" class="density-note"></p>
                 </div>
 
                 <p id="msg" class="msg" role="alert"></p>
                 <p id="formula" class="formula"></p>
                 <p id="unit-note" class="unit-note"></p>
-                <p id="status" class="status" role="status"></p>
 
-                <details class="settings">
-                    <summary><svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg> Display settings</summary>
-                    <div class="settings-grid">
-                        <div>
+                <!-- ============ EXTRAS (closed by default) ============ -->
+                <details id="all" class="fold">
+                    <summary><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg><span>See every unit at once</span><svg class="icon fold-arrow" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                    <div id="all-rows" class="rows"></div>
+                </details>
+
+                <details class="fold">
+                    <summary><svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg><span>Display options</span><svg class="icon fold-arrow" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                    <div class="options-grid">
+                        <div class="field">
                             <label for="opt-sig">Precision</label>
-                            <select id="opt-sig" class="unit-select">
+                            <select id="opt-sig">
                                 <option value="4">4 significant digits</option>
                                 <option value="6">6 significant digits</option>
-                                <option value="8">8 significant digits</option>
+                                <option value="8" selected>8 significant digits</option>
                                 <option value="10">10 significant digits</option>
                                 <option value="12">12 significant digits</option>
                                 <option value="15">15 significant digits</option>
                             </select>
                         </div>
-                        <div>
-                            <label for="opt-notation">Notation</label>
-                            <select id="opt-notation" class="unit-select">
-                                <option value="auto">Automatic</option>
-                                <option value="scientific">Scientific (× 10ⁿ)</option>
-                                <option value="plain">Plain (all digits)</option>
-                            </select>
-                        </div>
-                        <div>
+                        <div class="field">
                             <label for="opt-group">Digit grouping</label>
-                            <select id="opt-group" class="unit-select">
+                            <select id="opt-group">
                                 <option value="none">None (1234567)</option>
                                 <option value="intl">International (1,234,567)</option>
                                 <option value="indian">Indian (12,34,567)</option>
@@ -223,38 +194,31 @@
             </div>
         </section>
 
-        <!-- ============ ALL CONVERSIONS ============ -->
-        <section id="all" class="block all" aria-labelledby="all-title">
-            <div class="all-head">
-                <h2 id="all-title" class="block-title">All conversions</h2>
-                <div class="filter-box">
-                    <label class="sr-only" for="filter">Filter the list</label>
-                    <input id="filter" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Filter units">
-                </div>
-            </div>
-            <p id="all-sub" class="all-sub"></p>
-            <div class="table-scroll">
-                <table class="table" id="all-table">
-                    <thead><tr><th scope="col">Unit</th><th scope="col" class="num">Value</th><th scope="col"><span class="sr-only">Copy</span></th></tr></thead>
-                    <tbody id="all-body"></tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ============ RECENT ============ -->
-        <section id="recents" class="block" aria-labelledby="recent-title" hidden>
-            <div class="all-head">
-                <h2 id="recent-title" class="block-title"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Recent conversions</h2>
-                <button id="recent-clear" class="chip" type="button">Clear</button>
-            </div>
-            <div id="recent-list" class="chip-row"></div>
-        </section>
-
         <p class="privacy">
             <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
-            <span>Private by design: conversions are worked out on your device. Values are rounded for display, and some units (such as month, year or the barrel) have notes, so check them before relying on a result for anything critical.</span>
+            <span>Private by design: everything is worked out on your device. Results are rounded for display, and a few units (month, year, barrel) have notes, so double-check before relying on them for anything critical.</span>
         </p>
     </main>
+
+    <!-- ============ UNIT PICKER (opens when a unit button is pressed) ============ -->
+    <dialog id="picker" class="picker" aria-labelledby="picker-title">
+        <div class="picker-head">
+            <div class="picker-titles">
+                <h2 id="picker-title">Choose a unit</h2>
+                <p id="picker-hint" class="picker-hint"></p>
+            </div>
+            <button id="picker-close" class="mini-btn round" type="button" aria-label="Close">
+                <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+            </button>
+        </div>
+        <div class="picker-search">
+            <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+            <input id="picker-search" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+                   maxlength="40" placeholder="Search, e.g. gallon, psi, km" aria-label="Search units">
+        </div>
+        <div id="picker-list" class="picker-list"></div>
+        <p id="picker-empty" class="picker-empty" hidden>No unit matches that search.</p>
+    </dialog>
 
     <footer class="site-footer">
         <div class="wrap footer-inner">

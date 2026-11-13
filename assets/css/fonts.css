@@ -18,4 +18,38 @@
 :root {
     --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+
+    /* Type scale (fluid, ratio about 1.2 on phones up to 1.25 on desktop) */
+    --fs-xs:   .8125rem;
+    --fs-sm:   .9375rem;
+    --fs-base: 1.0625rem;
+    --fs-lg:   clamp(1.15rem, 1.08rem + .35vw, 1.3rem);
+    --fs-h3:   clamp(1.25rem, 1.1rem + .7vw, 1.55rem);
+    --fs-h2:   clamp(1.6rem, 1.2rem + 1.8vw, 2.5rem);
+    --fs-h1:   clamp(2rem, 1.2rem + 3.6vw, 4rem);
+
+    --lh-tight: 1.08;
+    --lh-snug:  1.25;
+    --lh-body:  1.65;
 }
+
+/* Typography polish shared by every page that loads fonts.css */
+html { font-optical-sizing: auto; }
+
+body {
+    font-family: var(--font-body);
+    font-kerning: normal;
+    font-feature-settings: "kern", "liga", "calt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; font-kerning: normal; }
+h1 { letter-spacing: -.035em; }
+h2 { letter-spacing: -.028em; }
+h3 { letter-spacing: -.02em; }
+p, li { text-wrap: pretty; }
+
+/* Numbers line up in calculators and converters */
+.expr, .result, .h-expr, .h-res, .key, input[type="number"], .conv-field b { font-variant-numeric: tabular-nums lining-nums; }
