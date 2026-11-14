@@ -1,15 +1,25 @@
 {
   "manifest_version": 3,
   "name": "MetriFlow - Calculator & Converter",
+  "short_name": "MetriFlow",
   "version": "1.0.0",
-  "description": "Scientific calculator and universal unit converter.",
+  "description": "Scientific calculator and universal unit converter. Private, no tracking, works on your device.",
+  "homepage_url": "https://codinglaks.github.io/MetriFlow/",
+  "minimum_chrome_version": "102",
   "icons": {
-    "16": "assets/media/logo/icon16.png",
-    "48": "assets/media/logo/icon48.png",
-    "128": "assets/media/logo/icon128.png"
+    "16": "assets/media/icons/icon16.png",
+    "32": "assets/media/icons/icon32.png",
+    "48": "assets/media/icons/icon48.png",
+    "128": "assets/media/icons/icon128.png"
   },
   "action": {
     "default_title": "MetriFlow",
-    "default_popup": "pop-ups/popup.html"
+    "default_popup": "pop-ups/popups.html",
+    "default_icon": {
+      "16": "assets/media/icons/icon16.png",
+      "32": "assets/media/icons/icon32.png",
+      "48": "assets/media/icons/icon48.png",
+      "128": "assets/media/icons/icon128.png"
+    }
   }
 }
