@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "MetriFlow - Calculator & Converter",
+  "version": "1.0.0",
+  "description": "Scientific calculator and universal unit converter.",
+  "icons": {
+    "16": "assets/media/logo/icon16.png",
+    "48": "assets/media/logo/icon48.png",
+    "128": "assets/media/logo/icon128.png"
+  },
+  "action": {
+    "default_title": "MetriFlow",
+    "default_popup": "pop-ups/popup.html"
+  }
+}
