@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="D:\MetriFlow\assets\media\icons\icon1.png" alt="MetriFlow logo" width="96" height="96">
+<img src="https://raw.githubusercontent.com/codinglaks/MetriFlow/extension/assets/media/icons/icon128.png" alt="MetriFlow logo" width="96" height="96">
 
 # MetriFlow
 
